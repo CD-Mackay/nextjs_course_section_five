@@ -1,7 +1,5 @@
-import { Fragment } from "react";
-import Head from "next/head";
 import fs from 'fs';
-import path from 'path';
+import path from 'path'; 
 
 function HomePage(props) {
   const { products } = props;
