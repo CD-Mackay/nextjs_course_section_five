@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import Head from "next/head";
+import fs from 'fs';
+import path from 'path';
 
 function HomePage(props) {
   const { products } = props;
@@ -13,9 +15,13 @@ function HomePage(props) {
 };
 
 export async function getStaticProps() {
+
+  const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json');
+  const jsonData = await fs.readFileSync(filePath);
+  const data = JSON.parse(jsonData);
   return {
     props: {
-      products: [{id: 'p1', title: 'product 1'}],
+      products: data.products
     }
   }
 }
