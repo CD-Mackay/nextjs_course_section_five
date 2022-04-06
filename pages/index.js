@@ -12,15 +12,17 @@ function HomePage(props) {
   );
 };
 
-export async function getStaticProps() {
-
+export async function getStaticProps(context) {
+  
+  console.log("regenerating!!!");
   const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json');
   const jsonData = await fs.readFileSync(filePath);
   const data = JSON.parse(jsonData);
   return {
     props: {
       products: data.products
-    }
+    },
+    revalidate: 30
   }
 }
 
