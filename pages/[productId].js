@@ -3,6 +3,10 @@ import fs from "fs";
 import path from "path";
 
 function ProductPage({ loadedProduct }) {
+
+  // if (!loadedProduct) {
+  //   return <p>...loading</p>
+  // }
   return (
     <Fragment>
       <h1>{loadedProduct.title}</h1>
@@ -31,10 +35,8 @@ export async function getStaticPaths() {
   return {
     paths: [
       { params: { productId: "p1" } },
-      { params: { productId: "p2" } },
-      { params: { productId: "p3" } }
     ],
-    fallback: false,
+    fallback: 'blocking',
   };
 }
 
