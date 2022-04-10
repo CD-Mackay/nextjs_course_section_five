@@ -12,7 +12,7 @@ function ProductPage({ loadedProduct }) {
       <p>{loadedProduct.description}</p>
     </Fragment>
   );
-}
+};
 
 export async function getStaticProps(context) {
   const { params } = context;
@@ -30,15 +30,14 @@ export async function getStaticProps(context) {
       loadedProduct: product,
     },
   };
-}
+};
 
 async function getData() {
   const filePath = path.join(process.cwd(), "data", "dummy-backend.json");
   const jsonData = await fs.readFileSync(filePath);
   const data = JSON.parse(jsonData);
-
   return data;
-}
+};
 
 export async function getStaticPaths() {
   const data = await getData();
