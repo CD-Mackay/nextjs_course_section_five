@@ -4,44 +4,37 @@ import useSWR from 'swr';
 function LastSales() {
 
   const [sales, setSales] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, error } = useSWR('https://nextjs-section5-e6020-default-rtdb.firebaseio.com/sales.json', (url) => fetch(url).then(res => res.json()));
 
-  const { data, error } = useSWR('https://nextjs-section5-e6020-default-rtdb.firebaseio.com/sales.json', fetcher);
+  useEffect(() => {
+    if (data) {
+      const finalSales = [];
+          for (const key in data) {
+            finalSales.push({
+              id: key,
+              username: data[key].username,
+              volume: data[key].volume
+            })
+          };
+          setSales(finalSales);
+    }
+  }, [data])
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   fetch('https://nextjs-section5-e6020-default-rtdb.firebaseio.com/sales.json' )
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     const finalSales = [];
-  //     for (const key in data) {
-  //       finalSales.push({
-  //         id: key,
-  //         username: data[key].username,
-  //         volume: data[key].volume
-  //       })
-  //     }
-  //     setSales(finalSales);
-  //     setIsLoading(false);
-  //   })
-  // }, []);
-
-  if (isLoading) {
-    return <p>...loading</p>
+  if (error) {
+    return <p>Failed to load</p>
   }
 
-  if (!sales) {
-    return <p>no sales</p>
+  if (!data || !sales) {
+    return <p>...loading</p>
   }
 
   return (
     <ul>
-      {/* {sales.map((element) => {
-        <li key={element.id}>
+      {sales.map((element) => {
+       return <li key={element.id}>
           {element.username} --- ${element.volume}
           </li>
-      })} */}
-      <li>I am LastSales!</li>
+      })}
     </ul>
   )
 };
