@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import useSWR from 'swr';
 
 function LastSales() {
 
   const [sales, setSales] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data, error } = useSWR('https://nextjs-section5-e6020-default-rtdb.firebaseio.com/sales.json', fetcher);
 
   // useEffect(() => {
   //   setIsLoading(true);
